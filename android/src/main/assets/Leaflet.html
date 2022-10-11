@@ -1,0 +1,124 @@
+<!-- Author: Patrick Abrahamsson -->
+<!-- https://leafletjs.com/reference.html#event -->
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.1/dist/leaflet.css"
+      integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.1/dist/leaflet.js"
+      integrity="sha256-NDI0K41gVbWqfkkaHj15IzU7PtMoelkzyKp8TOaFQ3s="
+      crossorigin=""
+    ></script>
+
+    <style>
+      html,
+      body {
+        margin: 0px;
+        padding: 0px;
+        height: 100%;
+        background-color: transparent;
+      }
+      #map {
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="map"></div>
+
+    <script type="text/javascript">
+      // POST to app
+      const sendToApp = async (message) => {
+        window.ReactNativeWebView.postMessage(JSON.stringify(message));
+      };
+
+      // Initialize map
+      var map = L.map('map', {
+        attributionControl: false,
+        zoomControl: true,
+      }).setView([0, 0]);
+
+      // Requests from app
+      const listener = document.addEventListener('message', (message) => {
+        const parser = JSON.parse(message?.data);
+
+        // Sets zoom
+        if (parser?.zoom > -1) {
+          map.setZoom(parser?.zoom);
+        }
+
+        // Sets maxZoom
+        if (parser?.maxZoom) {
+          map.setMaxZoom(parser?.maxZoom);
+        }
+
+        // Sets minZoom
+        if (parser?.minZoom) {
+          map.setMinZoom(parser?.minZoom);
+        }
+
+        // Sets flyTo
+        if (parser?.flyTo) {
+          const latLng = parser?.flyTo?.latLng;
+          const zoom = parser?.flyTo?.zoom;
+
+          map.flyTo(latLng, zoom);
+        }
+
+        // Sets markers
+        if (parser?.markers?.length) {
+          const markers = parser?.markers;
+
+          markers?.forEach((marker) => {
+            const fallbackUrl =
+              'https://github.com/putteabrahamsson/icons/blob/development/pin.png?raw=true';
+
+            const icon = L.icon({
+              iconUrl: marker?.icon ? marker?.icon : fallbackUrl,
+              iconSize: [marker?.iconSize?.width, marker?.iconSize?.height],
+            });
+
+            const popup = L.popup()
+              .setLatLng(marker?.latLng)
+              .setContent(marker?.title);
+
+            const savedMarker = L.marker(marker?.latLng, {
+              icon,
+            }).addTo(map);
+
+            savedMarker.bindPopup(popup);
+
+            if (!marker?.disabled) {
+              savedMarker.on('click', () => {
+                popup.openOn(map);
+                sendToApp(marker);
+              });
+            }
+          });
+        }
+
+        // Sets map tiles
+        if (parser?.map) {
+          L.tileLayer(parser?.map?.src, {
+            ...parser?.map?.tileOptions,
+          }).addTo(map);
+        }
+      });
+
+      window.removeEventListener(null, listener);
+    </script>
+  </body>
+</html>
