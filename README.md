@@ -1,29 +1,157 @@
-# react-native-leaflet-ts
-desc
+# React Native Leaflet TS
+
+Please show your support by adding a star! :)
+
+react-native-leaflet-ts is a library with Typescript support that let's you to render a Leaflet in a WebView.
+
+NOTE! Library is new, this will be updated & more stuff will be added.
+
+[![npm](https://img.shields.io/npm/v/react-native-leaflet-ts.svg)](https://www.npmjs.com/package/react-native-leaflet-ts)
+[![npm](https://img.shields.io/npm/dm/react-native-leaflet-ts.svg)](https://www.npmjs.com/package/react-native-leaflet-ts)
+[![npm](https://img.shields.io/npm/dt/react-native-leaflet-ts.svg)](https://www.npmjs.com/package/react-native-leaflet-ts)
+
 ## Installation
 
-```sh
+Npm
+
+```bash
 npm install react-native-leaflet-ts
+```
+
+Yarn
+
+```bash
+yarn add react-native-leaflet-ts
 ```
 
 ## Usage
 
-```js
-import { multiply } from "react-native-leaflet-ts";
+```javascript
+import Leaflet from 'react-native-leaflet-ts';
+```
 
-// ...
+## Usage with props
 
-const result = await multiply(3, 7);
+```javascript
+import Leaflet, { Markers, TileOptions } from 'react-native-leaflet-ts';
+```
+
+## Release log
+
+- [2022-10-11][v0.2.6] - Fixed support for Android
+- [2022-10-06][v0.2.1] - Fixed path for custom icon.
+- [2022-10-06][v0.2.0] - Minor changes to readme-file.
+- [2022-10-04][v0.1.8] - Support for custom icons & increased performance.
+- [2022-10-04][v0.1.7] - Added webview to peerDependencies.
+- [2022-10-04][v0.1.6] - Added dependencies to peerDependencies to prevent useRef crash.
+
+## API Reference
+
+#### Leaflet
+
+| Parameter             | Type                                    | Default     | Status       | Description                       |
+| :-------------------- | :-------------------------------------- | :---------- | :----------- | :-------------------------------- |
+| `map`                 | `src: string, tileOptions: TileOptions` |             | **Required** |                                   |
+| `zoom`                | `number`                                | 0           | **Optional** |                                   |
+| `maxZoom`             | `number`                                |             | **Optional** |                                   |
+| `minZoom`             | `number`                                |             | **Optional** |                                   |
+| `flyTo`               | `{ latLng: number[], zoom number }`     |             | **Optional** | Flies to a specific marker        |
+| `startInLoadingState` | `boolean`                               | true        | **Optional** | Map starts in loading state       |
+| `backgroundColor`     | `string`                                | transparent | **Optional** | BackgroundColor of map            |
+| `onMessage`           | `function`                              |             | **Optional** | (event: any) => void;             |
+| `onError`             | `function`                              |             | **Optional** | (event: any) => void              |
+| `onLoadStart`         | `function`                              |             | **Optional** | When webview loads starts loading |
+
+#### map
+
+| Parameter | Type          | Default | Status       | Description                           |
+| :-------- | :------------ | :------ | :----------- | :------------------------------------ |
+| `src`     | `string`      |         | **Required** | Source to "{z}/{x}/{-y}.png" tile url |
+| `options` | `TileOptions` |         | **Optional** |                                       |
+
+#### TileOptions
+
+`https://leafletjs.com/reference.html#tilelayer`
+
+| Parameter           | Type         | Default | Status       | Description                               |
+| :------------------ | :----------- | :------ | :----------- | :---------------------------------------- |
+| `tileSize`          | `number`     | 256     | **Optional** | Width and height of the tails in the grid |
+| `opacity`           | `number`     | 1       | **Optional** | Opacity of the map                        |
+| `updateWhenIdle`    | `boolean`    |         | **Optional** | Load new tiles only when panning ends     |
+| `updateWhenZooming` | `boolean`    | true    | **Optional** | Zoom animation                            |
+| `updateInterval`    | `number`     | 200     | **Optional** | Tile update speed                         |
+| `zIndex`            | `number`     | 1       | **Optional** | zIndex of tile                            |
+| `bounds`            | `[number[]]` |         | **Optional** |                                           |
+| `noWrap`            | `boolean`    | false   | **Optional** | If map should be repeated                 |
+| `pane`              | `string`     |         | **Optional** |                                           |
+| `className`         | `string`     |         | **Optional** |                                           |
+| `keepBuffer`        | `number`     | 2       | **Optional** |                                           |
+
+#### Markers
+
+| Parameter  | Type                               | Default | Status       | Description                                |
+| :--------- | :--------------------------------- | :------ | :----------- | :----------------------------------------- |
+| `latLng`   | `number[]`                         |         | **Required** | Position of the marker on the map          |
+| `icon`     | `string`                           |         | **Optional** | example: "src/assets/pin.png"              |
+| `iconSize` | `{ width: number, height: number}` |         | **Optional** | size of icon                               |
+| `disabled` | `boolean`                          | false   | **Optional** | Weather it's clickable or not              |
+| `title`    | `string`                           | ""      | **Optional** | Text in textbox after clicking on a marker |
+
+## Examples
+
+```javascript
+const markerList: Markers[] = [
+  {
+    latLng: [-38.31571580761326, -23.735463483398522],
+    iconSize: {
+      width: 25,
+      height: 25,
+    },
+    icon: './src/assets/mapPin.png',
+    title: 'Title 1',
+    disabled: true,
+  },
+  {
+    latLng: [-58.31571543253336, -43.535453281293517],
+    iconSize: {
+      width: 25,
+      height: 25,
+    },
+    title: 'Title 2',
+  },
+];
+```
+
+```javascript
+<Leaflet
+  map={{
+    src: source,
+    tileOptions: {
+      noWrap: true,
+    },
+  }}
+  minZoom={1}
+  zoom={2}
+  maxZoom={6}
+  flyTo={{
+    latLng: [-38.31571580761326, -23.735463483398522],
+    zoom: 5,
+  }}
+  markers={markerList}
+  backgroundColor="green"
+/>
 ```
 
 ## Contributing
 
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-## License
+## Links
 
-MIT
+[We App](https://www.weapp.se/)
+[GitHub](https://github.com/putteabrahamsson/react-native-leaflet-ts)
 
----
+## Help / Info
 
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+If you need any of the other Leaflet properties just let me know and I'll add them in.
+Send me a mail at patrick@weapp.se.

@@ -1,12 +1,28 @@
 {
   "name": "react-native-leaflet-ts",
-  "version": "0.1.0",
-  "description": "test",
+  "version": "0.2.6",
+  "description": "React Native Leaflet with Typescript support",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
-  "types": "lib/typescript/index.d.ts",
+  "types": "lib/commonjs/index",
   "react-native": "src/index",
   "source": "src/index",
+  "keywords": [
+    "react-native",
+    "leaflet",
+    "react-native-leaflet",
+    "RN-leaflet",
+    "map",
+    "tiles",
+    "react",
+    "maps",
+    "openstreetmap",
+    "typescript",
+    "react-native-indoor-map",
+    "weapp",
+    "rn leaflet",
+    "we app"
+  ],
   "files": [
     "src",
     "lib",
@@ -22,21 +38,11 @@
     "!**/__mocks__"
   ],
   "scripts": {
-    "test": "jest",
-    "typescript": "tsc --noEmit",
-    "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "prepare": "bob build",
-    "release": "release-it",
-    "example": "yarn --cwd example",
-    "bootstrap": "yarn example && yarn && yarn example pods"
+    "release": "release-it"
   },
-  "keywords": [
-    "react-native",
-    "ios",
-    "android"
-  ],
   "repository": "https://github.com/putteabrahamsson/react-native-leaflet-ts",
-  "author": "Putte Abrahamsson <patrick@weapp.se> (https://github.com/putteabrahamsson/react-native-leaflet-ts)",
+  "author": "Patrick Abrahamsson <patrick@weapp.se>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/putteabrahamsson/react-native-leaflet-ts/issues"
@@ -46,33 +52,34 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "@arkweid/lefthook": "^0.7.7",
     "@babel/eslint-parser": "^7.18.2",
     "@commitlint/config-conventional": "^17.0.2",
     "@react-native-community/eslint-config": "^3.0.2",
     "@release-it/conventional-changelog": "^5.0.0",
     "@types/jest": "^28.1.2",
-    "@types/react": "~17.0.21",
-    "@types/react-native": "0.68.0",
-    "commitlint": "^17.0.2",
+    "@types/react": "18.0.21",
+    "@types/react-native": "0.70.4",
     "eslint": "^8.4.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^28.1.1",
     "pod-install": "^0.1.0",
     "prettier": "^2.0.5",
-    "react": "17.0.2",
-    "react-native": "0.68.2",
+    "react": "18.2.0",
+    "react-native": "0.70.2",
     "react-native-builder-bob": "^0.18.3",
+    "react-native-webview": "^11.23.1",
     "release-it": "^15.0.0",
-    "typescript": "^4.5.2"
+    "typescript": "^4.8.4"
   },
   "resolutions": {
-    "@types/react": "17.0.21"
+    "@types/react": "18.0.21",
+    "@types/react-native": "0.70.4"
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-webview": "*"
   },
   "jest": {
     "preset": "react-native",
@@ -80,28 +87,6 @@
       "<rootDir>/example/node_modules",
       "<rootDir>/lib/"
     ]
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
-  "release-it": {
-    "git": {
-      "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}"
-    },
-    "npm": {
-      "publish": true
-    },
-    "github": {
-      "release": true
-    },
-    "plugins": {
-      "@release-it/conventional-changelog": {
-        "preset": "angular"
-      }
-    }
   },
   "eslintConfig": {
     "root": true,
