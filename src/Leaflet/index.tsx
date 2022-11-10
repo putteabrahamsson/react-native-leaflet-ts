@@ -27,6 +27,7 @@ type Props = {
   onLoadStart?: () => void;
   startInLoadingState?: boolean;
   backgroundColor?: string;
+  injectJavascript?: string;
 };
 
 export const RNLeaflet: FC<Props> = ({
@@ -41,9 +42,10 @@ export const RNLeaflet: FC<Props> = ({
   onLoadStart,
   startInLoadingState = true,
   backgroundColor,
+  injectJavascript,
 }) => {
   const htmlFile =
-    Platform?.OS === 'android'
+    Platform.OS === 'android'
       ? { uri: 'file:///android_asset/Leaflet.html' }
       : require('../html/Leaflet.html');
 
@@ -54,6 +56,10 @@ export const RNLeaflet: FC<Props> = ({
     if (!ref?.current) return;
 
     ref.current.postMessage(`${JSON.stringify(message)}`);
+  }, []);
+
+  const injectScript = useCallback((script: string) => {
+    ref.current?.injectJavaScript(script);
   }, []);
 
   useLayoutEffect(() => {
@@ -86,6 +92,11 @@ export const RNLeaflet: FC<Props> = ({
     configured,
     minZoom,
   ]);
+
+  useLayoutEffect(() => {
+    if (!configured) return;
+    if (injectJavascript) injectScript(injectJavascript);
+  }, [configured, injectJavascript, injectScript]);
 
   return (
     <View style={[styles.wrapper, { backgroundColor }]}>
