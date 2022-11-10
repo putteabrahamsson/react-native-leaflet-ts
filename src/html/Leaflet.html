@@ -52,7 +52,7 @@
       }).setView([0, 0]);
 
       // Requests from app
-      const listener = document.addEventListener('message', (message) => {
+      const listener = window.addEventListener('message', (message) => {
         const parser = JSON.parse(message?.data);
 
         // Sets zoom

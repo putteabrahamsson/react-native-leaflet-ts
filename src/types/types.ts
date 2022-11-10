@@ -23,4 +23,5 @@ export type TileOptions = {
   pane?: string;
   className?: string;
   keepBuffer?: number;
+  detectRetina?: boolean;
 };

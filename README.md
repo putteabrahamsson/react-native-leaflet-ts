@@ -38,6 +38,8 @@ import Leaflet, { Markers, TileOptions } from 'react-native-leaflet-ts';
 
 ## Release log
 
+- [2022-10-17][v0.2.9] - Added prop for detecting retina-screens
+- [2022-10-17][v0.2.8] - Fixed loading issue for iOS
 - [2022-10-11][v0.2.6] - Fixed support for Android
 - [2022-10-06][v0.2.1] - Fixed path for custom icon.
 - [2022-10-06][v0.2.0] - Minor changes to readme-file.
@@ -86,6 +88,7 @@ import Leaflet, { Markers, TileOptions } from 'react-native-leaflet-ts';
 | `pane`              | `string`     |         | **Optional** |                                           |
 | `className`         | `string`     |         | **Optional** |                                           |
 | `keepBuffer`        | `number`     | 2       | **Optional** |                                           |
+| `detectRetina`      | `boolean`    | false   | **Optional** |                                           |
 
 #### Markers
 
