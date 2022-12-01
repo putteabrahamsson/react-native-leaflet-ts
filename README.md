@@ -38,6 +38,7 @@ import Leaflet, { Markers, TileOptions } from 'react-native-leaflet-ts';
 
 ## Release log
 
+- [2022-12-01][v0.2.12] - Fixed webview dependency
 - [2022-10-17][v0.2.9] - Added prop for detecting retina-screens
 - [2022-10-17][v0.2.8] - Fixed loading issue for iOS
 - [2022-10-11][v0.2.6] - Fixed support for Android
