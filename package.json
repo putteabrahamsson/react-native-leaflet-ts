@@ -1,6 +1,6 @@
 {
   "name": "react-native-leaflet-ts",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "description": "React Native Leaflet with Typescript support",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -68,7 +68,7 @@
     "react": "18.2.0",
     "react-native": "0.70.2",
     "react-native-builder-bob": "^0.18.3",
-    "react-native-webview": "^11.23.1",
+    "react-native-webview": "11.25.0",
     "release-it": "^15.0.0",
     "typescript": "^4.8.4"
   },
@@ -79,7 +79,6 @@
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
-    "react-native-webview": "*"
   },
   "jest": {
     "preset": "react-native",
