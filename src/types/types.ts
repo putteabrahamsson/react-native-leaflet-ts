@@ -25,3 +25,25 @@ export type TileOptions = {
   keepBuffer?: number;
   detectRetina?: boolean;
 };
+
+export type Layers = {
+  src: string;
+  name: string;
+  tileOptions?: TileOptions;
+};
+
+export type GeoJsonFeatures = {
+  type: string;
+  properties?: {
+    name: string;
+  };
+  geometry: {
+    type: string;
+    coordinates: any[];
+  };
+};
+
+export type GeoJson = {
+  type: string;
+  features: GeoJsonFeatures[];
+};

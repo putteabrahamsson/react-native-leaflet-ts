@@ -7,13 +7,11 @@ import React, {
 } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import WebView from 'react-native-webview';
-import { Markers, TileOptions, Zoom } from '../types/types';
+import { GeoJson, Layers, Markers, Zoom } from '../types/types';
 
 type Props = {
-  map: {
-    src: string;
-    tileOptions?: TileOptions;
-  };
+  mapLayers: Layers[];
+  geoJson?: GeoJson;
   zoom?: Zoom;
   minZoom?: Zoom;
   maxZoom?: Zoom;
@@ -31,7 +29,8 @@ type Props = {
 };
 
 export const RNLeaflet: FC<Props> = ({
-  map,
+  mapLayers,
+  geoJson,
   zoom = 0,
   minZoom,
   maxZoom,
@@ -71,6 +70,7 @@ export const RNLeaflet: FC<Props> = ({
     if (maxZoom) sendAction({ maxZoom });
     if (minZoom) sendAction({ minZoom });
     if (markers) sendAction({ markers });
+    if (geoJson) sendAction({ geoJson });
     if (flyTo) {
       sendAction({
         flyTo: {
@@ -79,7 +79,7 @@ export const RNLeaflet: FC<Props> = ({
         },
       });
     }
-    if (map) sendAction({ map });
+    if (mapLayers) sendAction({ mapLayers });
   }, [
     flyTo,
     flyTo?.latLng,
@@ -87,10 +87,11 @@ export const RNLeaflet: FC<Props> = ({
     markers,
     maxZoom,
     sendAction,
-    map,
+    mapLayers,
     zoom,
     configured,
     minZoom,
+    geoJson,
   ]);
 
   useLayoutEffect(() => {
