@@ -38,6 +38,7 @@ import Leaflet, { Markers, TileOptions } from 'react-native-leaflet-ts';
 
 ## Release log
 
+- [2023-02-15][v0.2.16] - Added multiple layers & geoJSON
 - [2022-12-01][v0.2.12] - Fixed webview dependency
 - [2022-10-17][v0.2.9] - Added prop for detecting retina-screens
 - [2022-10-17][v0.2.8] - Fixed loading issue for iOS
@@ -52,25 +53,48 @@ import Leaflet, { Markers, TileOptions } from 'react-native-leaflet-ts';
 
 #### Leaflet
 
-| Parameter             | Type                                    | Default     | Status       | Description                       |
-| :-------------------- | :-------------------------------------- | :---------- | :----------- | :-------------------------------- |
-| `map`                 | `src: string, tileOptions: TileOptions` |             | **Required** |                                   |
-| `zoom`                | `number`                                | 0           | **Optional** |                                   |
-| `maxZoom`             | `number`                                |             | **Optional** |                                   |
-| `minZoom`             | `number`                                |             | **Optional** |                                   |
-| `flyTo`               | `{ latLng: number[], zoom number }`     |             | **Optional** | Flies to a specific marker        |
-| `startInLoadingState` | `boolean`                               | true        | **Optional** | Map starts in loading state       |
-| `backgroundColor`     | `string`                                | transparent | **Optional** | BackgroundColor of map            |
-| `onMessage`           | `function`                              |             | **Optional** | (event: any) => void;             |
-| `onError`             | `function`                              |             | **Optional** | (event: any) => void              |
-| `onLoadStart`         | `function`                              |             | **Optional** | When webview loads starts loading |
+| Parameter             | Type                                | Default     | Status       | Description                       |
+| :-------------------- | :---------------------------------- | :---------- | :----------- | :-------------------------------- |
+| `mapLayers`           | `Layers[]`                          |             | **Required** | 1 or more layers is needed        |
+| `zoom`                | `number`                            | 0           | **Optional** |                                   |
+| `maxZoom`             | `number`                            |             | **Optional** |                                   |
+| `minZoom`             | `number`                            |             | **Optional** |                                   |
+| `flyTo`               | `{ latLng: number[], zoom number }` |             | **Optional** | Flies to a specific marker        |
+| `startInLoadingState` | `boolean`                           | true        | **Optional** | Map starts in loading state       |
+| `backgroundColor`     | `string`                            | transparent | **Optional** | BackgroundColor of map            |
+| `onMessage`           | `function`                          |             | **Optional** | (event: any) => void;             |
+| `onError`             | `function`                          |             | **Optional** | (event: any) => void              |
+| `onLoadStart`         | `function`                          |             | **Optional** | When webview loads starts loading |
 
-#### map
+#### mapLayers
 
-| Parameter | Type          | Default | Status       | Description                           |
-| :-------- | :------------ | :------ | :----------- | :------------------------------------ |
-| `src`     | `string`      |         | **Required** | Source to "{z}/{x}/{-y}.png" tile url |
-| `options` | `TileOptions` |         | **Optional** |                                       |
+| Parameter     | Type          | Default | Status       | Description                                       |
+| :------------ | :------------ | :------ | :----------- | :------------------------------------------------ |
+| `name`        | `string`      |         | **Required** | Name of the map, mostly useful if multiple layers |
+| `src`         | `string`      |         | **Required** | Source of the map                                 |
+| `tileOptions` | `TileOptions` |         | **Optional** |                                                   |
+
+Example usage:
+
+```javascript
+const options: TileOptions = {
+  noWrap: true,
+  detectRetina: true,
+};
+
+const mapLayers: Layers[] = [
+  {
+    name: 'Floor 1',
+    src: 'https://cdn.myIndoorMap.com/maps/0faebe50-19e5-4445-9177-a09903973304/rev0/{z}/{x}/{-y}.png',
+    tileOptions: options,
+  },
+  {
+    name: 'Floor 2',
+    src: 'https://cdn.myIndoorMap.com/maps/71b328d0-d85a-43a9-87ca-bf7c145d145b/rev0/{z}/{x}/{-y}.png',
+    tileOptions: options,
+  },
+];
+```
 
 #### TileOptions
 
@@ -101,6 +125,21 @@ import Leaflet, { Markers, TileOptions } from 'react-native-leaflet-ts';
 | `disabled` | `boolean`                          | false   | **Optional** | Weather it's clickable or not              |
 | `title`    | `string`                           | ""      | **Optional** | Text in textbox after clicking on a marker |
 
+#### GeoJSON
+
+| Parameter  | Type                | Default | Status       | Description |
+| :--------- | :------------------ | :------ | :----------- | :---------- |
+| `type`     | `string`            |         | **Required** |             |
+| `features` | `GeoJsonFeatures[]` |         | **Required** |             |
+
+#### GeoJsonFeatures
+
+| Parameter    | Type                                   | Default | Status       | Description |
+| :----------- | :------------------------------------- | :------ | :----------- | :---------- |
+| `type`       | `string`                               |         | **Required** |             |
+| `geometry`   | `{ type: string, coordinates: any[] }` |         | **Required** |             |
+| `properties` | `{ name: string }`                     |         | **Optional** |             |
+
 ## Examples
 
 ```javascript
@@ -124,16 +163,29 @@ const markerList: Markers[] = [
     title: 'Title 2',
   },
 ];
+
+const options: TileOptions = {
+  noWrap: true,
+  detectRetina: true,
+};
+
+const mapLayers: Layers[] = [
+  {
+    name: 'Floor 1',
+    src: 'https://cdn.myIndoorMap.com/maps/0faebe50-19e5-4445-9177-a09903973304/rev0/{z}/{x}/{-y}.png',
+    tileOptions: options,
+  },
+  {
+    name: 'Floor 2',
+    src: 'https://cdn.myIndoorMap.com/maps/71b328d0-d85a-43a9-87ca-bf7c145d145b/rev0/{z}/{x}/{-y}.png',
+    tileOptions: options,
+  },
+];
 ```
 
 ```javascript
 <Leaflet
-  map={{
-    src: source,
-    tileOptions: {
-      noWrap: true,
-    },
-  }}
+  mapLayers={mapLayers}
   minZoom={1}
   zoom={2}
   maxZoom={6}

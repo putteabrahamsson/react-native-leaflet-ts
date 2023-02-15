@@ -1,6 +1,6 @@
 {
   "name": "react-native-leaflet-ts",
-  "version": "0.2.12",
+  "version": "0.2.16",
   "description": "React Native Leaflet with Typescript support",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
