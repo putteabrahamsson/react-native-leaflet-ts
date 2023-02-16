@@ -79,7 +79,7 @@
         }
 
         // Sets markers
-        if (parser?.markers?.length) {
+        if (parser?.markers) {
           const markers = parser?.markers;
 
           markers?.forEach((marker) => {
@@ -110,11 +110,26 @@
           });
         }
 
+        // Sets GeoJSON
+        if (parser?.geoJson) {
+          L.geoJSON(parser?.geoJson).addTo(map);
+        }
+
         // Sets map tiles
-        if (parser?.map) {
-          L.tileLayer(parser?.map?.src, {
-            ...parser?.map?.tileOptions,
-          }).addTo(map);
+        if (parser?.mapLayers) {
+          const layerObj = {};
+
+          parser?.mapLayers?.forEach((layer) => {
+            const newLayer = L.tileLayer(layer.src, {
+              ...layer?.tileOptions,
+            }).addTo(map);
+
+            layerObj[layer.name] = newLayer;
+          });
+
+          if (parser?.mapLayers?.length > 1) {
+            L.control.layers(layerObj).addTo(map);
+          }
         }
       });
 

@@ -38,6 +38,7 @@ import Leaflet, { Markers, TileOptions } from 'react-native-leaflet-ts';
 
 ## Release log
 
+- [2023-02-16][v0.2.18] - Fixed map for Android
 - [2023-02-15][v0.2.16] - Added multiple layers & geoJSON
 - [2022-12-01][v0.2.12] - Fixed webview dependency
 - [2022-10-17][v0.2.9] - Added prop for detecting retina-screens
