@@ -54,6 +54,7 @@ export const RNLeaflet = forwardRef<RNLeafletRef, Props>(
       backgroundColor,
       injectJavascript,
     },
+    // eslint-disable-next-line prettier/prettier
     passRef,
   ) => {
     const htmlFile =
@@ -112,9 +113,6 @@ export const RNLeaflet = forwardRef<RNLeafletRef, Props>(
       if (geoJson) {
         sendAction({ geoJson });
       }
-      if (attribution) {
-        sendAction({ attribution });
-      }
       if (flyTo) {
         sendAction({
           flyTo: {
@@ -138,7 +136,6 @@ export const RNLeaflet = forwardRef<RNLeafletRef, Props>(
       configured,
       minZoom,
       geoJson,
-      attribution,
     ]);
 
     useLayoutEffect(() => {
