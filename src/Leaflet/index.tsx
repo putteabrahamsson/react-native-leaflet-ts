@@ -15,6 +15,7 @@ type TFlyTo = {
   latLng: number[];
   zoom: Zoom;
 };
+
 type Props = {
   mapLayers: Layers[];
   geoJson?: GeoJson;
@@ -29,10 +30,6 @@ type Props = {
   startInLoadingState?: boolean;
   backgroundColor?: string;
   injectJavascript?: string;
-  attribution?: {
-    title: string;
-    position: 'bottomleft' | 'bottomright' | 'topleft' | 'topright';
-  };
 };
 
 export type RNLeafletRef = {
@@ -56,7 +53,6 @@ export const RNLeaflet = forwardRef<RNLeafletRef, Props>(
       startInLoadingState = true,
       backgroundColor,
       injectJavascript,
-      attribution,
     },
     passRef,
   ) => {
