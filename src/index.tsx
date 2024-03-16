@@ -7,5 +7,7 @@ export {
   GeoJson,
   GeoJsonFeatures,
   Layers,
+  RNLeafletRef,
+  TFlyTo,
 } from './types/types';
 export default Leaflet;

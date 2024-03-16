@@ -9,12 +9,14 @@ import React, {
 } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import WebView from 'react-native-webview';
-import { GeoJson, Layers, Markers, Zoom } from '../types/types';
-
-type TFlyTo = {
-  latLng: number[];
-  zoom: Zoom;
-};
+import {
+  GeoJson,
+  Layers,
+  Markers,
+  RNLeafletRef,
+  TFlyTo,
+  Zoom,
+} from '../types/types';
 
 type Props = {
   mapLayers: Layers[];
@@ -30,11 +32,6 @@ type Props = {
   startInLoadingState?: boolean;
   backgroundColor?: string;
   injectJavascript?: string;
-};
-
-export type RNLeafletRef = {
-  flyTo: (props: TFlyTo) => void;
-  clearMarkers: () => void;
 };
 
 export const RNLeaflet = forwardRef<RNLeafletRef, Props>(

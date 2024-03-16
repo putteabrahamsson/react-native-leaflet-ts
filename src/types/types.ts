@@ -48,3 +48,13 @@ export type GeoJson = {
   type: string;
   features: GeoJsonFeatures[];
 };
+
+export type TFlyTo = {
+  latLng: number[];
+  zoom: Zoom;
+};
+
+export type RNLeafletRef = {
+  flyTo: (props: TFlyTo) => void;
+  clearMarkers: () => void;
+};
