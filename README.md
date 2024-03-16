@@ -38,6 +38,8 @@ import Leaflet, { Markers, TileOptions } from 'react-native-leaflet-ts';
 
 ## Release log
 
+- [2024-03-16] [v0.3.3] - Added example of ref
+- [2024-03-16] [v0.3.2] - Fixed export of type
 - [2024-03-16][v0.3.1] - Added attribution, added ref to programmically clear markers & trigger flyTo.
 - [2023-02-16][v0.2.18] - Fixed map for Android
 - [2023-02-15][v0.2.16] - Added multiple layers & geoJSON
@@ -50,6 +52,52 @@ import Leaflet, { Markers, TileOptions } from 'react-native-leaflet-ts';
 - [2022-10-04][v0.1.8] - Support for custom icons & increased performance.
 - [2022-10-04][v0.1.7] - Added webview to peerDependencies.
 - [2022-10-04][v0.1.6] - Added dependencies to peerDependencies to prevent useRef crash.
+
+## Ref usages
+
+```react
+import Leaflet, { RNLeafletRef } from 'react-native-leaflet-ts';
+
+const App = () => {
+  const leafletRef = useRef<RNLeafletRef>(null);
+
+  return (
+    <SafeAreaView style={{ backgroundColor: 'gray', flex: 1 }}>
+      <Leaflet
+        ref={leafletRef}
+        mapLayers={[
+          {
+            name: 'mapoverview',
+            src,
+            tileOptions: {
+              attribution: 'hello! this is the attribution',
+            },
+          },
+        ]}
+        onMessage={d => console.log(d)}
+        markers={[
+          {
+            latLng: [0, 0, -20],
+            disabled: false,
+            title: 'test',
+            icon: 'https://as2.ftcdn.net/v2/jpg/03/29/26/39/1000_F_329263903_Oax03LQARwf34pbJn4rdcmQ2dgJMzo1D.jpg',
+          },
+        ]}
+      />
+
+      <Button
+        onPress={() =>
+          leafletRef.current?.flyTo({ latLng: [0, 0, -20], zoom: 5 })
+        }
+        title="flyto"></Button>
+
+      <Button
+        onPress={() => leafletRef.current?.clearMarkers()}
+        title="clear markers"></Button>
+    </SafeAreaView>
+  );
+}
+```
 
 ## API Reference
 
