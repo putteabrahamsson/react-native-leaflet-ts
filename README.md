@@ -38,6 +38,7 @@ import Leaflet, { Markers, TileOptions } from 'react-native-leaflet-ts';
 
 ## Release log
 
+- [2024-03-16][v0.3.1] - Added attribution, added ref to programmically clear markers & trigger flyTo.
 - [2023-02-16][v0.2.18] - Fixed map for Android
 - [2023-02-15][v0.2.16] - Added multiple layers & geoJSON
 - [2022-12-01][v0.2.12] - Fixed webview dependency
@@ -81,6 +82,7 @@ Example usage:
 const options: TileOptions = {
   noWrap: true,
   detectRetina: true,
+  attribution: 'hello!',
 };
 
 const mapLayers: Layers[] = [
@@ -101,20 +103,21 @@ const mapLayers: Layers[] = [
 
 `https://leafletjs.com/reference.html#tilelayer`
 
-| Parameter           | Type         | Default | Status       | Description                               |
-| :------------------ | :----------- | :------ | :----------- | :---------------------------------------- |
-| `tileSize`          | `number`     | 256     | **Optional** | Width and height of the tails in the grid |
-| `opacity`           | `number`     | 1       | **Optional** | Opacity of the map                        |
-| `updateWhenIdle`    | `boolean`    |         | **Optional** | Load new tiles only when panning ends     |
-| `updateWhenZooming` | `boolean`    | true    | **Optional** | Zoom animation                            |
-| `updateInterval`    | `number`     | 200     | **Optional** | Tile update speed                         |
-| `zIndex`            | `number`     | 1       | **Optional** | zIndex of tile                            |
-| `bounds`            | `[number[]]` |         | **Optional** |                                           |
-| `noWrap`            | `boolean`    | false   | **Optional** | If map should be repeated                 |
-| `pane`              | `string`     |         | **Optional** |                                           |
-| `className`         | `string`     |         | **Optional** |                                           |
-| `keepBuffer`        | `number`     | 2       | **Optional** |                                           |
-| `detectRetina`      | `boolean`    | false   | **Optional** |                                           |
+| Parameter           | Type         | Default | Status       | Description                                     |
+| :------------------ | :----------- | :------ | :----------- | :---------------------------------------------- |
+| `tileSize`          | `number`     | 256     | **Optional** | Width and height of the tails in the grid       |
+| `opacity`           | `number`     | 1       | **Optional** | Opacity of the map                              |
+| `updateWhenIdle`    | `boolean`    |         | **Optional** | Load new tiles only when panning ends           |
+| `updateWhenZooming` | `boolean`    | true    | **Optional** | Zoom animation                                  |
+| `updateInterval`    | `number`     | 200     | **Optional** | Tile update speed                               |
+| `zIndex`            | `number`     | 1       | **Optional** | zIndex of tile                                  |
+| `bounds`            | `[number[]]` |         | **Optional** |                                                 |
+| `noWrap`            | `boolean`    | false   | **Optional** | If map should be repeated                       |
+| `pane`              | `string`     |         | **Optional** |                                                 |
+| `className`         | `string`     |         | **Optional** |                                                 |
+| `keepBuffer`        | `number`     | 2       | **Optional** |                                                 |
+| `detectRetina`      | `boolean`    | false   | **Optional** |                                                 |
+| `attribution`       | `string`     |         | **Optional** | Will add attribution in the bottom right corner |
 
 #### Markers
 
