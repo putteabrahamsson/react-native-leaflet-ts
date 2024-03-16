@@ -4,8 +4,6 @@ Please show your support by adding a star! :)
 
 react-native-leaflet-ts is a library with Typescript support that let's you to render a Leaflet in a WebView.
 
-NOTE! Library is new, this will be updated & more stuff will be added.
-
 [![npm](https://img.shields.io/npm/v/react-native-leaflet-ts.svg)](https://www.npmjs.com/package/react-native-leaflet-ts)
 [![npm](https://img.shields.io/npm/dm/react-native-leaflet-ts.svg)](https://www.npmjs.com/package/react-native-leaflet-ts)
 [![npm](https://img.shields.io/npm/dt/react-native-leaflet-ts.svg)](https://www.npmjs.com/package/react-native-leaflet-ts)
@@ -38,6 +36,7 @@ import Leaflet, { Markers, TileOptions } from 'react-native-leaflet-ts';
 
 ## Release log
 
+- [2024-03-16] [v0.3.4] - Fixed example
 - [2024-03-16] [v0.3.3] - Added example of ref
 - [2024-03-16] [v0.3.2] - Fixed export of type
 - [2024-03-16][v0.3.1] - Added attribution, added ref to programmically clear markers & trigger flyTo.
@@ -74,13 +73,12 @@ const App = () => {
             },
           },
         ]}
-        onMessage={d => console.log(d)}
         markers={[
           {
             latLng: [0, 0, -20],
             disabled: false,
             title: 'test',
-            icon: 'https://as2.ftcdn.net/v2/jpg/03/29/26/39/1000_F_329263903_Oax03LQARwf34pbJn4rdcmQ2dgJMzo1D.jpg',
+            icon: 'https://link-to-image.com/image/4389219412.png',
           },
         ]}
       />
@@ -89,11 +87,11 @@ const App = () => {
         onPress={() =>
           leafletRef.current?.flyTo({ latLng: [0, 0, -20], zoom: 5 })
         }
-        title="flyto"></Button>
+        title="flyto" />
 
       <Button
         onPress={() => leafletRef.current?.clearMarkers()}
-        title="clear markers"></Button>
+        title="clear markers" />
     </SafeAreaView>
   );
 }
