@@ -24,6 +24,7 @@ export type TileOptions = {
   className?: string;
   keepBuffer?: number;
   detectRetina?: boolean;
+  attribution?: string;
 };
 
 export type Layers = {
