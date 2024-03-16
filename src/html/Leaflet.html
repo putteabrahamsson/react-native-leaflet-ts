@@ -10,15 +10,13 @@
 
     <link
       rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.1/dist/leaflet.css"
-      integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
-      crossorigin=""
-    />
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin="" />
     <script
-      src="https://unpkg.com/leaflet@1.9.1/dist/leaflet.js"
-      integrity="sha256-NDI0K41gVbWqfkkaHj15IzU7PtMoelkzyKp8TOaFQ3s="
-      crossorigin=""
-    ></script>
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""></script>
 
     <style>
       html,
@@ -41,9 +39,29 @@
 
     <script type="text/javascript">
       // POST to app
-      const sendToApp = async (message) => {
+      const sendToApp = async message => {
         window.ReactNativeWebView.postMessage(JSON.stringify(message));
       };
+
+      // Exclude the current attribution
+      L.Control.Attribution.include({
+        _update: function () {
+          if (!this._map) {
+            return;
+          }
+
+          var attribs = [];
+          for (var i in this._attributions) {
+            if (this._attributions.hasOwnProperty(i) && this._attributions[i]) {
+              attribs.push(i);
+            }
+          }
+
+          // Customize the attribution text
+          var prefix = ''; // Set an empty prefix
+          this._container.innerHTML = prefix + attribs.join(' | ');
+        },
+      });
 
       // Initialize map
       var map = L.map('map', {
@@ -51,9 +69,27 @@
         zoomControl: true,
       }).setView([0, 0]);
 
+      L.control
+        .attribution({
+          position: 'bottomright',
+        })
+        .addTo(map);
+
+      const clearMarkers = () => {
+        map.eachLayer(function (layer) {
+          if (layer instanceof L.Marker) {
+            map.removeLayer(layer);
+          }
+        });
+      };
+
       // Requests from app
-      const listener = window.addEventListener('message', (message) => {
+      const listener = window.addEventListener('message', message => {
         const parser = JSON.parse(message?.data);
+
+        if (parser.clearMarkers) {
+          clearMarkers();
+        }
 
         // Sets zoom
         if (parser?.zoom > -1) {
@@ -82,13 +118,16 @@
         if (parser?.markers) {
           const markers = parser?.markers;
 
-          markers?.forEach((marker) => {
+          markers?.forEach(marker => {
             const fallbackUrl =
               'https://github.com/putteabrahamsson/icons/blob/development/pin.png?raw=true';
 
             const icon = L.icon({
-              iconUrl: marker?.icon ? marker?.icon : fallbackUrl,
-              iconSize: [marker?.iconSize?.width, marker?.iconSize?.height],
+              iconUrl: marker.icon || fallbackUrl,
+              iconSize: [
+                marker?.iconSize?.width || 25,
+                marker?.iconSize?.height || 25,
+              ],
             });
 
             const popup = L.popup()
@@ -99,13 +138,8 @@
               icon,
             }).addTo(map);
 
-            savedMarker.bindPopup(popup);
-
-            if (!marker?.disabled) {
-              savedMarker.on('click', () => {
-                popup.openOn(map);
-                sendToApp(marker);
-              });
+            if (!marker.disabled) {
+              savedMarker.bindPopup(popup);
             }
           });
         }
@@ -119,16 +153,17 @@
         if (parser?.mapLayers) {
           const layerObj = {};
 
-          parser?.mapLayers?.forEach((layer) => {
+          parser?.mapLayers?.forEach(layer => {
             const newLayer = L.tileLayer(layer.src, {
-              ...layer?.tileOptions,
+              ...layer.tileOptions,
+              attribution: `<a href="https://www.npmjs.com/package/react-native-leaflet-ts">Leaflet</a> | ${layer.tileOptions.attribution}`,
             }).addTo(map);
 
             layerObj[layer.name] = newLayer;
           });
 
-          if (parser?.mapLayers?.length > 1) {
-            L.control.layers(layerObj).addTo(map);
+          if (Object.keys(layerObj).length > 1) {
+            L.control.layers(null, layerObj, { collapsed: false }).addTo(map);
           }
         }
       });
